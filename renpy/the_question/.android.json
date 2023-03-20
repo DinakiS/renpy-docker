@@ -1,0 +1,1 @@
+{"layout": "internal", "orientation": "sensorLandscape", "package": "com.renpy.tst", "include_pil": false, "expansion": false, "name": "tst", "update_always": true, "source": false, "icon_name": "tst", "version": "0.0.1", "update_icons": true, "target_version": 14, "permissions": ["VIBRATE", "INTERNET"], "numeric_version": "1", "include_sqlite": false, "store": "none"}
