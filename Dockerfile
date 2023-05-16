@@ -20,7 +20,7 @@ RUN mkdir /android-sdk \
     && rm sdk.zip
 
 # Required Ren'Py version. = UPDATE IT HERE =
-ENV RENPY_VERSION=7.5.3
+ENV RENPY_VERSION=7.6.0
 ENV RENPY_PATH /opt/renpy
 ENV SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy
 
