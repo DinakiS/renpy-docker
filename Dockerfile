@@ -51,7 +51,7 @@ RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-${ANDRO
 # Creating local.properties with path to android.keystore
 # and path to SDK
 RUN mkdir $RENPY_PATH/rapt/project \
-    && echo "key.alias=android\nkey.store.password=android\nkey.alias.password=android\nkey.store=$RENPY_PATH/android.keystore\nsdk.dir=$RENPY_PATH/rapt/Sdk" > $RENPY_PATH/rapt/project/local.properties
+    && echo "key.alias=android\nkey.store.password=android\nkey.alias.password=android\nsdk.dir=$RENPY_PATH/rapt/Sdk" > $RENPY_PATH/rapt/project/local.properties
 
 COPY ./renpy $RENPY_PATH
 
