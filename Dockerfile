@@ -55,6 +55,9 @@ RUN mkdir $RENPY_PATH/rapt/project \
 RUN mkdir -p $RENPY_PATH/rapt/project/app/the_question \
     && cp $RENPY_PATH/the_question/android.keystore $RENPY_PATH/rapt/project/app/the_question/android.keystore
 
+RUN ls $RENPY_PATH/the_question && cat $RENPY_PATH/the_question/android.keystore \
+    && ls $RENPY_PATH/rapt/project/app/the_question/ && cat $RENPY_PATH/rapt/project/app/the_question/android.keystore
+
 COPY ./renpy $RENPY_PATH
 
 # Compiling "The Question" game to android.
