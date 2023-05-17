@@ -52,11 +52,6 @@ RUN $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-${ANDRO
 # and path to SDK
 RUN mkdir $RENPY_PATH/rapt/project \
     && echo "key.alias=android\nkey.store.password=android\nkey.alias.password=android\nkey.store=$RENPY_PATH/the_question/android.keystore\nsdk.dir=$RENPY_PATH/rapt/Sdk" > $RENPY_PATH/rapt/project/local.properties
-RUN mkdir -p $RENPY_PATH/rapt/project/app/the_question \
-    && cp $RENPY_PATH/the_question/android.keystore $RENPY_PATH/rapt/project/app/the_question/android.keystore
-
-#RUN ls $RENPY_PATH/the_question && cat $RENPY_PATH/the_question/android.keystore \
-#    && ls $RENPY_PATH/rapt/project/app/the_question/ && cat $RENPY_PATH/rapt/project/app/the_question/android.keystore
 
 COPY ./renpy $RENPY_PATH
 
