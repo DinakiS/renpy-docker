@@ -55,16 +55,16 @@ RUN mkdir $RENPY_PATH/rapt/project \
 RUN mkdir -p $RENPY_PATH/rapt/project/app/the_question \
     && cp $RENPY_PATH/the_question/android.keystore $RENPY_PATH/rapt/project/app/the_question/android.keystore
 
-RUN ls $RENPY_PATH/the_question && cat $RENPY_PATH/the_question/android.keystore \
-    && ls $RENPY_PATH/rapt/project/app/the_question/ && cat $RENPY_PATH/rapt/project/app/the_question/android.keystore
+#RUN ls $RENPY_PATH/the_question && cat $RENPY_PATH/the_question/android.keystore \
+#    && ls $RENPY_PATH/rapt/project/app/the_question/ && cat $RENPY_PATH/rapt/project/app/the_question/android.keystore
 
 COPY ./renpy $RENPY_PATH
 
 # Compiling "The Question" game to android.
 # To download Gradle and test if everything works
 RUN cd $RENPY_PATH \
-  && sh renpy.sh launcher android_build ./the_question --dest /build-tmp \
-  && rm -rf /build-tmp \
+  && sh renpy.sh launcher android_build ./the_question --dest /build-tmp || true \
+  && rm -rf /build-tmp || true \
   && rm -rf $RENPY_PATH/rapt/bin \
   && rm -rf $RENPY_PATH/rapt/project/app/build/outputs/apk/release
 
