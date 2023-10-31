@@ -61,7 +61,9 @@ RUN cd $RENPY_PATH \
   && sh renpy.sh launcher android_build ./the_question --dest /build-tmp || true \
   && rm -rf /build-tmp || true \
   && rm -rf $RENPY_PATH/rapt/bin \
-  && rm -rf $RENPY_PATH/rapt/project/app/build/outputs/apk/release
+  && rm -rf $RENPY_PATH/rapt/project/app/build
+  && rm -rf $RENPY_PATH/rapt/project/app/src
+  && rm -rf $RENPY_PATH/tmp
 
 RUN mkdir /build && mkdir /game
 
