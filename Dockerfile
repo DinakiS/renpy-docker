@@ -1,12 +1,20 @@
-FROM openjdk:8-slim as android_sdk
+FROM openjdk:21-slim as base
+#FROM gradle:jdk21 as base
+ARG RENPY_VERSION=8.2.0
+ENV RENPY_VERSION=$RENPY_VERSION
+RUN apt-get update && apt-get install -y --no-install-recommends python3 libgl1 -y && rm -rf /var/lib/apt/lists/*
+
+FROM base as base_build
+RUN apt-get update && apt-get install -y --no-install-recommends wget unzip && rm -rf /var/lib/apt/lists/*
+
+FROM base_build as android_sdk
 WORKDIR /android-sdk/cmdline-tools
 
-ENV SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip" \
+ENV SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" \
     ANDROID_VERSION=33 \
     ANDROID_BUILD_TOOLS_VERSION=33.0.0
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget unzip && \
-    wget -O sdk.zip $SDK_URL && \
+RUN wget -O sdk.zip $SDK_URL && \
     unzip sdk.zip && \
     mv cmdline-tools latest && \
     rm sdk.zip
@@ -16,25 +24,21 @@ RUN /android-sdk/cmdline-tools/latest/bin/sdkmanager --update
 RUN /android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-${ANDROID_VERSION}" \
     "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
 
-FROM busybox:1.36.1 as renpy
+FROM base_build as renpy
 WORKDIR /renpy-sdk
-ENV RENPY_VERSION=7.6.3
 
-RUN wget -O renpy.tar.bz2 https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-sdk.tar.bz2 && \
-    wget -O rapt.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-rapt.zip
-RUN tar -xjf renpy.tar.bz2 && \
+RUN wget -O renpy.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-sdk.zip && \
+    unzip renpy.zip && \
+    wget -O rapt.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-rapt.zip && \
     unzip rapt.zip -d renpy-$RENPY_VERSION-sdk && \
-    rm renpy.tar.bz2 rapt.zip && \
+    rm renpy.zip rapt.zip && \
     mkdir /renpy && \
     mv renpy-*/* /renpy && \
     rm -rf /renpy/doc /renpy/tutorial
 
-FROM openjdk:8-slim as build
+FROM base_build as build
 WORKDIR /renpy
 USER root
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends python2 libgl1
 
 COPY --from=renpy /renpy /renpy
 COPY ./renpy .
@@ -47,27 +51,21 @@ RUN mkdir /renpy/rapt/project \
 
 # Compiling "The Question" game to android.
 # To download Gradle and test if everything works
-RUN sh renpy.sh launcher android_build ./the_question --dest /build-tmp || true && \
+RUN sh renpy.sh launcher android_build ./the_question --dest /build-tmp && \
   rm -rf /build-tmp || true && \
-  rm -rf /renpy/rapt/bin && \
-  rm -rf /renpy/rapt/project/app/build && \
-  rm -rf /renpy/rapt/project/app/src && \
   rm -rf /renpy/tmp
 
 # === Final ===
-FROM openjdk:8-slim
+FROM base
 
 USER root
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends python2 libgl1
-
-ENV RENPY_VERSION=7.6.3 \
-    RENPY_PATH=/opt/renpy \
+ENV RENPY_PATH=/opt/renpy \
     SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
     ANDROID_HOME="$RENPY_PATH/rapt/Sdk"
 
 COPY --from=build /renpy $RENPY_PATH
+COPY --from=build /root/.gradle /root/.gradle
 
 RUN mkdir /build && mkdir /game
 
