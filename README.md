@@ -1,5 +1,8 @@
 Ren'Py Docker image with RAPT for making android builds in CI/CD.
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/dinaki/renpy)](https://hub.docker.com/r/dinaki/renpy)
+
+
 ## Usage
 Android build
 ```
