@@ -1,4 +1,4 @@
-Ren'Py Docker image for building android games in CI/CD.
+Ren'Py Docker image with RAPT for making android builds in CI/CD.
 
 ## Usage
 Android build
