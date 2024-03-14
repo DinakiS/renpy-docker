@@ -30,7 +30,7 @@ jobs:
       with:
         images: dinaki/renpy
         tags: |
-          type=raw,pattern=${{ github.event.inputs.version }},enable=${{ matrix.version == 'base' }}
+          type=raw,value=${{ github.event.inputs.version }},enable=${{ matrix.version == 'base' }}
           type=raw,value=latest,enable=${{ matrix.version == 'base' }}
 
           type=raw,value=${{ github.event.inputs.version }}-${{ matrix.version }},enable=${{ matrix.version != 'base' }}
