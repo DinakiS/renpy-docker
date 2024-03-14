@@ -36,4 +36,6 @@ jobs:
         context: .
         file: ./Dockerfile.${{ matrix.version }}
         push: true
-        tags: ${{ github.event.inputs.version }}${{ matrix.version != 'base' && '-' + matrix.version || '' }}
+        tags: |
+          ${{ github.event.inputs.version }}${{ matrix.version != 'base' && join(['-', matrix.version]) || '' }}
+          ${{ matrix.version == 'base' && 'latest' || '' }}
