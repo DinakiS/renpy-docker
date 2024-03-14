@@ -1,0 +1,31 @@
+ARG RENPY_VERSION=8.2.1
+
+FROM busybox as ren
+ARG RENPY_VERSION
+RUN wget -O renpy.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-sdk.zip && \
+    unzip renpy.zip && \
+    rm renpy.zip && \
+    mkdir /renpy && \
+    mv renpy-*/* /renpy
+
+RUN cd /renpy
+RUN rm -rf /renpy/doc
+RUN rm -rf /renpy/tutorial
+RUN rm -rf /renpy/the_question
+RUN rm -rf /renpy/lib/py3-mac-universal
+RUN rm -rf /renpy/lib/py3-windows-x86_64
+RUN rm -rf /renpy/renpy.app
+RUN rm -rf /renpy/renpy.exe
+
+FROM python:3-slim
+ENV RENPY_VERSION=$RENPY_VERSION \
+    RENPY_PATH=/opt/renpy \
+    SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy
+
+RUN apt-get update && apt-get install -y --no-install-recommends libgl1-mesa-glx -y && rm -rf /var/lib/apt/lists/*
+
+COPY --from=ren /renpy $RENPY_PATH
+
+RUN mkdir /build && mkdir /game
+
+WORKDIR $RENPY_PATH
