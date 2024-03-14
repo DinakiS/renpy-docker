@@ -12,10 +12,6 @@ RUN cd /renpy
 RUN rm -rf /renpy/doc
 RUN rm -rf /renpy/tutorial
 RUN rm -rf /renpy/the_question
-RUN rm -rf /renpy/lib/py3-mac-universal
-RUN rm -rf /renpy/lib/py3-windows-x86_64
-RUN rm -rf /renpy/renpy.app
-RUN rm -rf /renpy/renpy.exe
 
 FROM python:3-slim
 ENV RENPY_VERSION=$RENPY_VERSION \
