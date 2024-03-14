@@ -30,14 +30,10 @@ jobs:
       with:
         images: dinaki/renpy
         tags: |
-          type=semver,pattern={{version}},enable=${{ matrix.version == 'base' }}
-          type=semver,pattern={{major}},enable=${{ matrix.version == 'base' }}
-          type=semver,pattern={{major}}.{{minor}},enable=${{ matrix.version == 'base' }}
+          type=semver,pattern=${{ github.event.inputs.version }},enable=${{ matrix.version == 'base' }}
           type=raw,value=latest,enable=${{ matrix.version == 'base' }}
 
-          type=raw,value=${{ version }}-${{ matrix.version }},enable=${{ matrix.version != 'base' }}
-          type=raw,value=${{ major }}-${{ matrix.version }},enable=${{ matrix.version != 'base' }}
-          type=raw,value=${{ major }}.${{ minor }}-${{ matrix.version }},enable=${{ matrix.version != 'base' }}
+          type=raw,value=${{ github.event.inputs.version }}-${{ matrix.version }},enable=${{ matrix.version != 'base' }}
           type=raw,value=${{ matrix.version }},enable=${{ matrix.version != 'base' }}
 
     - name: Login to Docker Hub
