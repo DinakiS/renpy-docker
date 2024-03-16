@@ -17,7 +17,7 @@ Web build
 docker run --rm \
   -v "local/path/to/game:/game" \
   -v "local/path/to/build:/build" \
-  dinaki/renpy:latest \
+  dinaki/renpy:web \
   sh renpy.sh launcher web_build /game --dest /build/web
 ```
 
@@ -44,3 +44,4 @@ docker run --rm \
 - `RENPY_VERSION` and `latest` - build for Win/Linux/Mac
 - `RENPY_VERSION-android` and `android` - build with RAPT for Android
 - `RENPY_VERSION-ios` and `ios` - build with Ren'iOS for making XCode project
+- `RENPY_VERSION-web` and `web` - build for web
