@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        version: ["base", "android", "ios"]
+        version: ["base", "android", "ios", "web"]
 
     steps:
     - uses: actions/checkout@v4

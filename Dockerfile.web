@@ -1,0 +1,12 @@
+ARG RENPY_VERSION=8.2.1
+
+FROM busybox as web
+ARG RENPY_VERSION
+RUN wget -O renpyweb.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-web.zip && \
+    unzip renpyweb.zip && \
+    rm renpyweb.zip && \
+    mv web/* /web
+
+FROM dinaki/renpy:$RENPY_VERSION
+COPY --from=web /web /opt/renpy/web
+WORKDIR /opt/renpy
