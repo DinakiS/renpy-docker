@@ -4,7 +4,8 @@ FROM busybox as renios
 ARG RENPY_VERSION
 RUN wget -O renios.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERSION-renios.zip && \
     unzip renios.zip && \
-    rm renios.zip
+    rm renios.zip && \
+    mv renios/* /renios
 
 FROM dinaki/renpy:$RENPY_VERSION
 COPY --from=renios /renios /opt/renpy/renios
