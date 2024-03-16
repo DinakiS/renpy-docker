@@ -23,5 +23,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends libgl1-mesa-glx
 COPY --from=ren /renpy $RENPY_PATH
 
 RUN mkdir /build && mkdir /game
+RUN sh /opt/renpy/renpy.sh launcher set_project /game
 
 WORKDIR $RENPY_PATH

@@ -9,4 +9,6 @@ RUN wget -O renios.zip https://www.renpy.org/dl/$RENPY_VERSION/renpy-$RENPY_VERS
 
 FROM dinaki/renpy:$RENPY_VERSION
 COPY --from=renios /renios /opt/renpy/renios
+
+RUN sh /opt/renpy/renpy.sh launcher set_project /game
 WORKDIR /opt/renpy
