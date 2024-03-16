@@ -36,7 +36,7 @@ docker run --rm \
   -v "local/path/to/game:/game" \
   -v "local/path/to/build:/build" \
   dinaki/renpy:ios \
-  sh renpy.sh launcher ios_create /game /build
+  sh renpy.sh launcher ios_create /game /build/xcode
 ```
 
 ## Tags
