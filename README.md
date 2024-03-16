@@ -12,6 +12,15 @@ docker run --rm \
   sh renpy.sh launcher distribute --dest /build --no-update --package pc --package mac /game
 ```
 
+Web build
+```
+docker run --rm \
+  -v "local/path/to/game:/game" \
+  -v "local/path/to/build:/build" \
+  dinaki/renpy:latest \
+  sh renpy.sh launcher web_build /game --dest /build/web
+```
+
 Android build
 ```
 docker run --rm \
