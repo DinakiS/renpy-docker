@@ -18,7 +18,7 @@ docker run --rm \
   -v "local/path/to/game:/game" \
   -v "local/path/to/build:/build" \
   dinaki/renpy:web \
-  sh renpy.sh launcher web_build /game --dest /build/web
+  sh renpy.sh launcher set_project /game && sh renpy.sh launcher web_build /game --dest /build/web
 ```
 
 Android build
