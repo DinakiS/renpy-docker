@@ -49,7 +49,7 @@ COPY --from=android_sdk /android-sdk /renpy/rapt/Sdk/
 # Creating local.properties with path to android.keystore
 # and path to SDK
 RUN mkdir /renpy/rapt/project \
-    && echo "key.alias=android\nkey.store.password=android\nkey.alias.password=android\nkey.store=/renpy/the_question/android.keystore\nsdk.dir=/renpy/rapt/Sdk" > /renpy/rapt/project/local.properties
+    && echo "key.alias=android\nkey.store.password=android\nkey.alias.password=android\nkey.store=/renpy/android.keystore\nsdk.dir=/renpy/rapt/Sdk" > /renpy/rapt/project/local.properties
 
 # Compiling "The Question" game to android.
 # To download Gradle and test if everything works
