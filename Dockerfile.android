@@ -39,6 +39,9 @@ FROM base_build AS build
 WORKDIR /renpy
 USER root
 
+ENV SDL_VIDEODRIVER=dummy \
+    SDL_AUDIODRIVER=dummy
+
 COPY --from=renpy /renpy /renpy
 COPY ./renpy .
 COPY --from=android_sdk /android-sdk /renpy/rapt/Sdk/
@@ -51,7 +54,7 @@ RUN mkdir /renpy/rapt/project \
 # Compiling "The Question" game to android.
 # To download Gradle and test if everything works
 RUN sh renpy.sh launcher android_build ./the_question --dest /build-tmp && \
-  rm -rf /build-tmp || true && \
+  rm -rf /build-tmp && \
   rm -rf /renpy/tmp
 
 # === Final ===
@@ -59,13 +62,15 @@ FROM base
 
 USER root
 
-ENV RENPY_PATH=/opt/renpy \
-    SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
-    ANDROID_HOME="$RENPY_PATH/rapt/Sdk"
+ENV RENPY_PATH=/opt/renpy
 
-COPY --from=build /renpy $RENPY_PATH
+ENV SDL_VIDEODRIVER=dummy \
+    SDL_AUDIODRIVER=dummy \
+    ANDROID_HOME=${RENPY_PATH}/rapt/Sdk
+
+COPY --from=build /renpy ${RENPY_PATH}
 COPY --from=build /root/.gradle /root/.gradle
 
 RUN mkdir /build && mkdir /game
 
-WORKDIR $RENPY_PATH
+WORKDIR ${RENPY_PATH}
