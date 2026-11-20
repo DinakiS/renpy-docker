@@ -44,6 +44,7 @@ ENV SDL_VIDEODRIVER=dummy \
 
 COPY --from=renpy /renpy /renpy
 COPY ./renpy .
+RUN cp /renpy/android.keystore /renpy/the_question/android.keystore
 COPY --from=android_sdk /android-sdk /renpy/rapt/Sdk/
 
 # Creating local.properties with path to android.keystore
